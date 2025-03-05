@@ -1,7 +1,17 @@
 import React, { createContext, useContext, useState } from "react";
 
+interface StateContextTypes {
+  activeMenu: boolean;
+  screenSize: number;
+  setScreenSize: React.Dispatch<React.SetStateAction<number>>;
+  handleClick: (clicked: string) => void;
+  isClicked: initialStateTypes;
+  initialState: initialStateTypes;
+  setIsClicked: React.Dispatch<React.SetStateAction<initialStateTypes>>;
+  setActiveMenu: React.Dispatch<React.SetStateAction<boolean>>;
+}
 //@ts-expect-error:"Expected 1 arguments, but got 0."
-const StateContext = createContext();
+const StateContext = createContext<StateContextTypes>();
 
 interface initialStateTypes {
   chat: boolean;
@@ -9,9 +19,6 @@ interface initialStateTypes {
   userProfile: boolean;
   notification: boolean;
 }
-// interface StateContextTypes {
-//   initialState: initialStateTypes;
-// }
 const initialState: initialStateTypes = {
   chat: false,
   cart: false,
@@ -23,7 +30,8 @@ export const ContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [screenSize, setScreenSize] = useState(undefined);
+  //@ts-expect-error:""
+  const [screenSize, setScreenSize] = useState<number>(undefined);
   const [activeMenu, setActiveMenu] = useState(true);
   const [isClicked, setIsClicked] = useState(initialState);
 
@@ -48,4 +56,6 @@ export const ContextProvider = ({
   );
 };
 
+//// @ts-expect-error: "Type 'unknown' is not assignable to type 'StateContextTypes'".
+// eslint-disable-next-line react-refresh/only-export-components
 export const useStateContext = () => useContext(StateContext);

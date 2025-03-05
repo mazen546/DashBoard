@@ -8,4 +8,17 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 
+/* Hide sf grid cell focus outline */
+.e-grid td.e-rowcell.e-focus.e-focused {
+  box-shadow: none !important;
+}
+
+.e-grid td.e-groupcaption .e-focus.e-focused {
+  box-shadow: none !important;
+}
+
+.e-grid th.e-headercell.e-focus.e-focused {
+  box-shadow: none !important;
+}
+
 @tailwind utilities;

@@ -22,8 +22,8 @@ const NavButton = ({
   customFunc,
   icon,
   color,
-  dotColor,
-}: NavButtonTypes) => (
+}: // dotColor,
+NavButtonTypes) => (
   <TooltipComponent content={title} position="BottomCenter">
     <button
       type="button"
@@ -54,11 +54,11 @@ const Navbar = () => {
     const handleResize = () => setScreenSize(window.innerWidth);
 
     window.addEventListener("resize", handleResize);
-
+    console.log("resize");
     handleResize();
 
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [setScreenSize]);
 
   useEffect(() => {
     if (screenSize <= 900) {
@@ -66,7 +66,7 @@ const Navbar = () => {
     } else {
       setActiveMenu(true);
     }
-  }, [screenSize]);
+  }, [screenSize, setActiveMenu]);
 
   const handleActiveMenu = () => setActiveMenu(!activeMenu);
 

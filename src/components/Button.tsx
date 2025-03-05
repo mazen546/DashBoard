@@ -8,6 +8,7 @@ interface PropTypes {
   borderRadius: string;
   backgroundColor?: string;
   width?: string;
+  icon?: React.ReactNode;
 }
 const Button = ({
   icon,
