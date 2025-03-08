@@ -3,6 +3,7 @@ import {
   Inject,
   SparklineTooltip,
 } from "@syncfusion/ej2-react-charts";
+import { useStateContext } from "../../contexts/ContextProvider";
 
 interface Proptypes {
   id: string;
@@ -16,6 +17,7 @@ interface Proptypes {
   type: string;
 }
 const SparkLine = ({ id, height, width, color, data, type }: Proptypes) => {
+  const { currentColor } = useStateContext();
   return (
     <SparklineComponent
       id={id}
@@ -25,7 +27,7 @@ const SparkLine = ({ id, height, width, color, data, type }: Proptypes) => {
       lineWidth={1}
       valueType="Numeric"
       fill={color}
-      border={{ color: "blue", width: 2 }}
+      border={{ color: { currentColor }, width: 2 }}
       tooltipSettings={{
         visible: true,
         format: "${x} : data ${yval}",
@@ -33,7 +35,7 @@ const SparkLine = ({ id, height, width, color, data, type }: Proptypes) => {
           visible: true,
         },
       }}
-      markerSettings={{ visible: true, size: 2.5, fill: "blue" }}
+      markerSettings={{ visible: true, size: 2.5, fill: { currentColor } }}
       dataSource={data}
       xName="x"
       yName="yval"

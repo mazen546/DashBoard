@@ -9,6 +9,13 @@ interface StateContextTypes {
   initialState: initialStateTypes;
   setIsClicked: React.Dispatch<React.SetStateAction<initialStateTypes>>;
   setActiveMenu: React.Dispatch<React.SetStateAction<boolean>>;
+  currentColor: string;
+  currentMode: string;
+  setColor: (color: string) => void;
+  // @ts-expect-error:"Parameter 'e' implicitly has an 'any'"
+  setMode: (e) => void;
+  themeSettings: boolean;
+  setThemeSettings: React.Dispatch<React.SetStateAction<boolean>>;
 }
 //@ts-expect-error:"Expected 1 arguments, but got 0."
 const StateContext = createContext<StateContextTypes>();
@@ -34,6 +41,26 @@ export const ContextProvider = ({
   const [screenSize, setScreenSize] = useState<number>(undefined);
   const [activeMenu, setActiveMenu] = useState(true);
   const [isClicked, setIsClicked] = useState(initialState);
+  const [currentColor, setCurrentColor] = useState(
+    localStorage.getItem("colorMode") || "#03C9D7"
+  );
+  const [currentMode, setCurrentMode] = useState(
+    localStorage.getItem("themeMode") || "light"
+  );
+  const [themeSettings, setThemeSettings] = useState(false);
+
+  // @ts-expect-error:"Parameter 'e' implicitly has an 'any'"
+  const setMode = (e) => {
+    setCurrentMode(e.target.value);
+    localStorage.setItem("themeMode", e.target.value);
+    setThemeSettings(false);
+  };
+
+  const setColor = (color: string) => {
+    setCurrentColor(color);
+    localStorage.setItem("colorMode", color);
+    setThemeSettings(false);
+  };
 
   const handleClick = (clicked: string) =>
     setIsClicked({ ...initialState, [clicked]: true });
@@ -49,6 +76,12 @@ export const ContextProvider = ({
         initialState,
         setIsClicked,
         setActiveMenu,
+        currentColor,
+        currentMode,
+        setColor,
+        setMode,
+        themeSettings,
+        setThemeSettings,
       }}
     >
       {children}
